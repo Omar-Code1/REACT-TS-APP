@@ -10,10 +10,13 @@ function App() {
 
   const getTime = (): number => new Date().getTime();
 
-  const addNewTask = (task: Task) =>
+  const addNewTask = (task: Task) => {
     setTasks([{ ...task, id: getTime() }, ...tasks]);
-  const deleteATask = (id: number) =>
+  };
+
+  const deleteATask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+  };
 
   return (
     <div>
