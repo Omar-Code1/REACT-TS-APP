@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Card from './components/Card';
+import Form from './components/Form';
+import List from './components/List';
+import Navbar from './components/Navbar';
+import { Task } from './types';
 
 function App() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const getTime = (): number => new Date().getTime();
+
+  const addNewTask = (task: Task) =>
+    setTasks([{ ...task, id: getTime() }, ...tasks]);
+  const deleteATask = (id: number) =>
+    setTasks(tasks.filter((task) => task.id !== id));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+      <main className="container mt-4">
+        <div className="row">
+          <div className="col-4">
+            <Form addNewTask={addNewTask} />
+          </div>
+          <div className="col-8">
+            <div className="row">
+              <List tasks={tasks} deleteATask={deleteATask} />
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
